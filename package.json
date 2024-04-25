@@ -1,7 +1,7 @@
 {
-  "name": "shockbsapi",
+  "name": "shockapi",
   "description": "shock",
-  "package-name": "shockbsapi",
+  "package-name": "shockapi",
   "version": "0.0.1",
   "author": "shockbs",
   "license": "CC-BY-NC 4.0",
