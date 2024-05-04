@@ -21,7 +21,7 @@ module.exports = async(message) {
             Accept: "application/json",
             "Content-Type": "application/json"
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify({data})
     })
     if (!fetched.ok) {
         throw new Error(fetched);
