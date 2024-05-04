@@ -34,7 +34,7 @@ join the [support server](https://discord.gg/zeBet3HrU4) and visit api settings 
 # Logging in with an API Key
 ```js
 import shockbs from "shockbs";
-
+// const shockbs = require("shockbs");
 try {
     shockbs.login(process.env.ShockBS_APIKEY);
 } catch(err) {
@@ -45,7 +45,7 @@ You only need to call login() once, it's recommended to do that on your main fil
 # Checking if you are already logged in
 ```js
 import shockbs from "shockbs";
-
+// const shockbs = require("shockbs");
 const loggedIn = shockbs.loggedIn();
 if (loggedIn === true) {
     console.log("Already Logged In");
@@ -56,7 +56,7 @@ if (loggedIn === true) {
 # GuessThePokemon Game
 ```js
 import shockbs from "shockbs";
-
+// const shockbs = require("shockbs");
 new shockbs.guessThePokemonGame({
     base: interaction, // required, can be either message or interaction
     baaeType: "Interaction" // required, the type of base, can be either message or interaction, case-insensitive
@@ -75,8 +75,23 @@ new shockbs.guessThePokemonGame({
     time: "half minute", //optional
 }).startGame();
 ```
-
-
+# GPT-4 (FREE)
+- supports chat conversation:
+```js
+import shockbs from "shockbs";
+// const shockbs = require("shockbs");
+if (!(message.mentions?.users?.first() || {id:false}).id === client.user.id) return;
+const ai = await shockbs.gpt4Chat(message);
+console.log(`New GPT-4 Powered Message Sent: \nMessage ID: ${ai.id} at ${ai.channel.name} in ${ai.guild.name} (${ai.guild.id})`);
+```
+- text generation only:
+```js
+import shockbs from "shockbs";
+// const shockbs = require("shockbs");
+console.log(await shockbs.gpt4Text("Write me a poem of stars."))
+```
+# GPT-3.5 
+- coming soon
 
 # Star History
 <a href="https://star-history.com/#shockbs/bsshock&Date">
