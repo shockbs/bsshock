@@ -59,7 +59,7 @@ import shockbs from "shockbs";
 // const shockbs = require("shockbs");
 new shockbs.guessThePokemonGame({
     base: interaction, // required, can be either message or interaction
-    baaeType: "Interaction" // required, the type of base, can be either message or interaction, case-insensitive
+    baseType: "Interaction" // required, the type of base, can be either message or interaction, case-insensitive
     embed: {
         title: "Who's the Pokemon?", // optional, string, the title of embed
         color: "#F600FF", // optional, string, the color of embed
