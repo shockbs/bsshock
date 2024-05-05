@@ -3,7 +3,7 @@
   "description": "LOTS ultilities to upgrade your Discord Bot using SHOCK API !",
   "main": "./src/index.js",
   "package-name": "shockbs",
-  "version": "0.0.1111",
+  "version": "0.0.1112",
   "author": "shockbs",
   "license": "CC-BY-NC 4.0",
   "exports": {
@@ -26,10 +26,12 @@
   "keywords": [
 "shockbs","shock", "discord.js-games","djs-games","discord.js-game","djs-game","discordjs-games","discordjs-game","games-djs","game-djs","game-discord.js","games-discordjs","ai-discord","ai-discord.js","ai-djs","ai-discordjs","game-discord","discord-game","games-discord","discord-games","ai-gpt4","free-gpt4","free-gpt-4","discord-ai","discord.js-ai","discordjs-ai","discord-gpt","discord-gpt4","discord.js-gpt4","discordjs-gpt4","djs-gpt4"
   ],
+  "dependencies": {
+    "node-fetch": "^2.7.0"
+  }
   "devDependencies": {
     "discord.js": "^14.14.1",
     "string-similarity": "^4.0.4",
-    "node-fetch": "^2.7.0",
     "axios": "^1.6.7"
   },
   "engines": {
