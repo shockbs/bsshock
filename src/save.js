@@ -4,7 +4,7 @@ const Login = async(a)=> {
     if (typeof a !== "string") {
         throw new Error("Token must be a string");
     }
-    if (a?.length) {
+    if (!a?.length) {
         throw new Error("No token provided");
     }
     const token = a.replace(/^(Token|Bearer|Key|Shock)\s*/i, '');
