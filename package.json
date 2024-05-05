@@ -28,7 +28,7 @@
   ],
   "dependencies": {
     "node-fetch": "^2.7.0"
-  }
+  },
   "devDependencies": {
     "discord.js": "^14.14.1",
     "string-similarity": "^4.0.4",
