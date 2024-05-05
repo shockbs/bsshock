@@ -2,7 +2,7 @@ const fetch = require("node-fetch");
 const { loggedIn, getToken } = require("../../save.js");
 const cache = new Map();
 
-module.exports = async(message) {
+module.exports = async(message)=> {
     if (loggedIn() === false) {
         throw new Error("API not logged in yet");
     }
