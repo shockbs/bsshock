@@ -191,7 +191,7 @@ module.exports = class guessThePokemonGame {
                 new EmbedBuilder()
                 .setColor(this.options.embed.color)
                 .setTitle(this.options.embed.timeoutMessage.replaceAll("${pokemonName}",this.data.name))
-                .setDescription(`\`\`\`javascript\nAttempts: ${this.attempts === 0 ? "Inactive, No Attempts":this.attempts}\n${difference}`)
+                .setDescription(`\`\`\`javascript\nAttempts: ${this.attempts === 0 ? "Inactive, No Attempts":this.attempts}\n\`\`\`\n${difference}`)
                 .setURL("https://npmjs.com/package/shockbs")
                 .setImage("attachment://api.shockbs.is-a.dev_guess_the_pokemon_output.png")
                 .setFooter({text:`Requested By @${this.base.user.username}`,iconURL: this.base.user.displayAvatarURL()})
@@ -246,7 +246,7 @@ module.exports = class guessThePokemonGame {
                return false;
             } else {
                 const compare = stringSimilarity.compareTwoStrings(ii.fields.getTextInputValue("api.shockbs.is-a.dev_npm_guessThePokemonGame").toLowerCase(), this.data.name.toLowerCase());
-                if (ended === true) {
+                if (this.ended === true) {
                     return ii.reply({
                         ephemeral:true,
                         content: `😱Oh no!😱\n🤔Do you know why you got this response?🤔\n😥I was hosted on a terrible **__SLOW__ and __WEAK__** server!😭\n 😤This made the game initialization take a LOOOONNNNNGGG time(which should only take 100 milliseconds with a normal server😐), and this this message is here because something is fucking delayed \\:(`,
@@ -307,6 +307,9 @@ module.exports = class guessThePokemonGame {
             }
         })
         } catch(e) {
+            if (e.message.includes("color")) {
+                throw new Error("Failed to convert color to string, option.embed.color is not a valid color")
+            }
             throw new Error("Failed to edit message for initialization: "+e.message);
         }
     }
@@ -315,7 +318,7 @@ module.exports = class guessThePokemonGame {
         if (this.options.baseType === "Interaction") {
             try {
                 if (this.base.deferred) {
-                    await this.base.editReply({content: "Loading..."});
+                    await this.base.editReply({content: "Loading...",allowedMentions:{repliedUser:false,users:[]}});
                     this.message = await this.base.fetchReply();
                 } else if (this.base.replied) {
                     this.message = await this.base.fetchReply();
@@ -323,10 +326,11 @@ module.exports = class guessThePokemonGame {
                         content: "Loading...",
                         embeds: [],
                         components: [],
-                        files: []
+                        files: [],
+                        allowedMentions:{repliedUser:false,users:[]}
                     })
                 } else {
-                    this.message = await this.base.reply({content:"Loading..."});
+                    this.message = await this.base.reply({content:"Loading...",allowedMentions:{repliedUser:false,users:[]}});
                 }
             } catch(eeeee) {
                 if (eeeee.message.includes("429") || eeeee.message.includes("Permission")) throw new Error(eeeee);
@@ -334,7 +338,7 @@ module.exports = class guessThePokemonGame {
             }
         } else {
             try {
-                this.message = await this.base.reply({content:"Loading..."});
+                this.message = await this.base.reply({content:"Loading...",allowedMentions:{repliedUser:false,users:[]}});
             } catch(eeeeeeee) {
                 if (eeeeeeee.message.includes("429") || eeeeeeee.message.includes("Permission")) throw new Error(eeeeeeee);
                 throw new TypeError(`You are not passing an Message as base, but provided options.baseType as "Interaction"`);
