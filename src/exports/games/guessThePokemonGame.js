@@ -210,7 +210,7 @@ module.exports = class guessThePokemonGame {
                     }
                 })
             } else {
-                this.message.edit({
+                this.inter.update({
                     content: "",
                     embeds: [
                 new EmbedBuilder()
