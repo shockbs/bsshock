@@ -75,7 +75,7 @@ new shockbs.guessThePokemonGame({
     time: "half minute", //optional
 }).startGame();
 ```
-# GPT-4 (FREE)
+# GPT-4 (FREE) (NOT DONE, DO NOT USE)
 - supports chat conversation:
 ```js
 import shockbs from "shockbs";

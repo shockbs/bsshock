@@ -175,8 +175,7 @@ module.exports = class guessThePokemonGame {
              return this.handleCollect(i);
         })
         collector.on("end",()=> {
-            if (this.inter === false) {
-                const diff = Date.now() - this.start;
+            const diff = Date.now() - this.start;
                 const mins = Math.floor(diff/60000);
                 const secs = Math.floor((diff - (mins * 60000)) / 1000);
                 let difference;
@@ -185,6 +184,7 @@ module.exports = class guessThePokemonGame {
                 } else {
                     difference = `\`\`\`python\nTime Taken: ${secs} second${secs < 2 ? "":"s"}\n\`\`\``;
                 }
+            if (this.inter === false) {
                 this.message.edit({
                     content: "",
                     embeds: [
@@ -259,7 +259,7 @@ module.exports = class guessThePokemonGame {
                 this.attempts ++
                 if (compare >= 0.7) {
                     this.inter = ii;
-                    return stopCollector();
+                    return this.stopCollector();
                 } else {
                     this.inter = false;
                     return ii.update({content:`[\`${this.options.embed.loseMessage.replaceAll("`",'\\`').replaceAll("]","\\]")}\`](<https://npmjs.com/package/shockbs>)\n### similarity: \`${compare}\`\n\`\`\`js\nAttempts: ${this.attempts}\n\`\`\``});
