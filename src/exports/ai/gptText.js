@@ -1,14 +1,20 @@
 const fetch = require("node-fetch");
 const { loggedIn, getToken } = require("../../save.js");
 
-module.exports = async(message)=> {
+module.exports = async(message, model)=> {
     if (loggedIn() === false) {
         throw new Error("API not logged in yet");
     }
     if (!message?.length) {
         throw new Error("message is not provided");
     }
-    const fetched = await fetch("https://api.shockbs.is-a.dev/v1/ai/gpt4/text", {
+    if (!model?.length) {
+        throw new ReferenceError("model is not provided")
+    }
+    if (!["gpt4","gpt3.5","gpt3"].includes(model)) {
+        throw new ReferenceError("model must be \"gpt4\", \"gpt3.5\" or \"gpt3\"")
+    }
+    const fetched = await fetch(`https://api.shockbs.is-a.dev/v1/ai/${model}/text`, {
         method: "post",
         headers: {
             Authorization: `Bearer ${getToken()}`,

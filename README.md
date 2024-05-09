@@ -13,10 +13,11 @@
     <ul style="list-style-type: none; padding: 0;">
         <li style="margin-bottom: 10px;">&#8226; Various Games for Discord Bots</li>
         <li style="margin-bottom: 10px;">&#8226; Unrestricted Unlimited Free AI including GPT-4</li>
+        <li style="margin-bottom: 10px;">&#8226; Custom AI Personality</li>
         <li style="margin-bottom: 10px;">&#8226; Performant</li>
         <li style="margin-bottom: 10px;">&#8226; Reliable</li>
         <li style="margin-bottom: 10px;">&#8226; Customizable</li>
-        <li>&#8226; Compatible with Both TS and CJS/MJS Environments</li>
+        <li style="margin-bottom: 10px;">&#8226; Compatible with Both TS and CJS/MJS Environments</li>
     </ul>
 </div>
 </span>
@@ -24,14 +25,14 @@
 
 # [Support Server](https://discord.gg/zeBet3HrU4)
 https://discord.gg/zeBet3HrU4
-# Getting Started
+# [Getting Started](https://discord.gg/zeBet3HrU4)
 you can install ShockBS via npm:
 ```bash
 npm i shockbs@latest
 ```
-# Getting your API Key
+# [Getting your API Key](https://discord.gg/zeBet3HrU4)
 join the [support server](https://discord.gg/zeBet3HrU4) and visit api settings channel
-# Logging in with an API Key
+# [Logging in with an API Key](https://discord.gg/zeBet3HrU4)
 ```js
 import shockbs from "shockbs";
 // const shockbs = require("shockbs");
@@ -75,23 +76,67 @@ new shockbs.guessThePokemonGame({
     time: "half minute", //optional
 }).startGame();
 ```
-# GPT-4 (FREE) (NOT DONE, DO NOT USE)
+# GPT-4 / GPT-3.5 / GPT-3 (FREE & Unlimited)
 - supports chat conversation:
+> first initialize gpt4Chat
 ```js
 import shockbs from "shockbs";
 // const shockbs = require("shockbs");
-if (!(message.mentions?.users?.first() || {id:false}).id === client.user.id) return;
-const ai = await shockbs.gpt4Chat(message);
-console.log(`New GPT-4 Powered Message Sent: \nMessage ID: ${ai.id} at ${ai.channel.name} in ${ai.guild.name} (${ai.guild.id})`);
+
+const chatData = new shockbs.gpt4Chat({
+    model: "GPT-4", // available models: gpt-4, gpt-3.5, gpt-3
+    replyMention: false, //whether to mention on reply
+    maxInteractions: 30, // max interactions with the ai before clearing conversation history
+    components: null, // extra components
+    custom: false, // whether to use custom GPT personality
+    embed: {
+        color: "#FF00F6"
+    }
+})
+```
+> available models: gpt-4, gpt-3.5, gpt-3
+and now you can attach it to your bot client for easy use (optional):
+```js
+client.shockChat = chatData;
+```
+> processing messages:
+```js
+if (!(message.mentions?.users?.first() || {id:false}).id === client.user.id || !message.content?.length) return;
+await client.shockChat.message(message);
+```
+> clearing all conversation history:
+```js
+client.shockChat.clear().then(()=> console.log("Cleared Conversation History"));
+```
+> clearing a person's conversation history:
+```js
+const result = await client.shockChat.clearConversation(interaction.user.id);
+if (result) {
+    console.log("success");
+} else {
+    console.log("failed");
+}
+```
+> getting a person's conversation history:
+```js
+client.shockChat.getData(interaction.user.id).then(data=> console.log(data));
+```
+> getting a person's chat interactions count:
+```js
+console.log(await client.shockChat.getCount(interaction.user.id));
 ```
 - text generation only:
 ```js
 import shockbs from "shockbs";
 // const shockbs = require("shockbs");
-console.log(await shockbs.gpt4Text("Write me a poem of stars."))
+
+//gpt4
+console.log(await shockbs.gptText("Why does OpenAI not having traditional CEO?","gpt4"));
+//gpt3.5
+console.log(await shockbs.gptText("Write me a poem of stars.","gpt3.5"));
+//gpt3
+console.log(await shockbs.gptText("Guide me to make a watermelon spaghetti.","gpt3"));
 ```
-# GPT-3.5 
-- coming soon
 
 # Star History
 <a href="https://star-history.com/#shockbs/bsshock&Date">
