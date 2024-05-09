@@ -145,7 +145,7 @@ module.exports = class gpt4Chat {
     if (msg.length < 4097) {
         return interaction.reply({
             embeds: [new EmbedBuilder().setColor(this.options.embed.color).setDescription(msg)],
-            components: this.components
+            components: this.components,
             allowedMentions: {repliedUser:this.options.replyMention,parse:[],users:[],roles:[]}
         });
     } else {
