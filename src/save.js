@@ -7,7 +7,7 @@ const Login = async(a)=> {
     if (!a?.length) {
         throw new Error("No token provided");
     }
-    const token = a.replace(/^(Token|Bearer|Key|Shock)\s*/i, '');
+    const token = a.replace(/^(Token|Bearer|Key|Shock)\s*/i, '').replaceAll("`","").replaceAll("|","");
     if (!token.length > 15) {
         throw new Error("No valid token provided");
     }

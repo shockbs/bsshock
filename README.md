@@ -78,12 +78,12 @@ new shockbs.guessThePokemonGame({
 ```
 # GPT-4 / GPT-3.5 / GPT-3 (FREE & Unlimited)
 - supports chat conversation:
-> first initialize gpt4Chat
+> first initialize gptChat
 ```js
 import shockbs from "shockbs";
 // const shockbs = require("shockbs");
 
-const chatData = new shockbs.gpt4Chat({
+const chatData = new shockbs.gptChat({
     model: "GPT-4", // available models: gpt-4, gpt-3.5, gpt-3
     replyMention: false, //whether to mention on reply
     maxInteractions: 30, // max interactions with the ai before clearing conversation history
@@ -94,8 +94,15 @@ const chatData = new shockbs.gpt4Chat({
     }
 })
 ```
-> available models: gpt-4, gpt-3.5, gpt-3
-and now you can attach it to your bot client for easy use (optional):
+> custom trained GPT trained from API Panel:
+```js
+new shockbs.gptChat({
+    ...[data],
+    custom: true, // enables custom trained gpt, supports all models
+})
+```
+### available models: gpt-4, gpt-3.5, gpt-3 
+> and now you can attach it to your bot client for easy use (optional):
 ```js
 client.shockChat = chatData;
 ```

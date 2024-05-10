@@ -130,7 +130,12 @@ module.exports = class gpt4Chat {
         body: JSON.stringify({data})
     });
     if (fetched.status === 403) {
-        throw new Error("Custom GPT Personality is not configured from the dashboard");
+        message.reply({content:"Error: API request to api.shockbs.is-a.dev/v1/ was rejected or banned",allowedMentions:{repliedUser:false, parse:[],users:[],roles:[]}});
+        if (this.options.custom) {
+            throw new Error("Custom GPT Personality is not configured from the panel");
+        } else {
+            throw new Error("The account associated with the API token was banned or deactivated")
+        }
     }
     if (!fetched.ok) {
         throw new Error(fetched);
