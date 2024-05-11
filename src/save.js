@@ -1,5 +1,5 @@
 let s;
-const fetch = require("node-fetch");
+const axios = require("axios");
 const Login = async(a)=> {
     if (typeof a !== "string") {
         throw new Error("Token must be a string");
@@ -12,7 +12,8 @@ const Login = async(a)=> {
         throw new Error("No valid token provided");
     }
     try {
-        const r = await fetch("https://api.shockbs.is-a.dev/v1/ping",{
+        await axios({
+           url: "https://api.shockbs.is-a.dev/v1/ping",
             method: "GET",
             headers: {
               Authorization: `Bearer ${token}`,
@@ -20,11 +21,8 @@ const Login = async(a)=> {
              'Content-Type': 'application/json',
            }
         })
-        if (r.status !== 200) {
-            throw new Error("Invalid token"+r);
-        }
         s = token
-        throw new String("Logged In Successfully").substr(0);
+        return "Logged In Successfully"
     } catch(e) {
         throw new Error("Invalid Token: Couldn't login api.shockbs.is-a.dev"+e);
     }
