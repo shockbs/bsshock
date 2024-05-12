@@ -43,7 +43,7 @@ module.exports = class gpt4Chat {
       throw new TypeError("options.components should be an array");
     }
     if (!options.custom) {
-        throw new ReferenceError("options.custom was missing");
+        options.custom = false;
     }
     if (typeof options.custom !== "boolean") {
         throw new TypeError("options.custom must be a boolean");
