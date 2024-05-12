@@ -21,7 +21,7 @@ module.exports = class gpt4Chat {
       throw new ReferenceError("options.model must be one of the available models");
     }
     if (!options.replyMention) {
-      replyMention = false;
+      options.replyMention = false;
     } else if (typeof options.replyMention !== "boolean") {
       throw new TypeError("options.replyMention must be a boolean");
     }
@@ -39,7 +39,7 @@ module.exports = class gpt4Chat {
     }
     if (!options.components) {
       options.components = null;
-    } else if (typeof options.components !== "array") {
+    } else if (!Array.isArray(options.components)) {
       throw new TypeError("options.components should be an array");
     }
     if (!options.custom) {
@@ -148,21 +148,21 @@ module.exports = class gpt4Chat {
         await this.cache.set(message.author.id,data);
     }
     if (msg.length < 4097) {
-        return interaction.reply({
+        return message.reply({
             embeds: [new EmbedBuilder().setColor(this.options.embed.color).setDescription(msg)],
-            components: this.components,
+            components: this.options.components,
             allowedMentions: {repliedUser:this.options.replyMention,parse:[],users:[],roles:[]}
         });
     } else {
         const chunks = [];
-        let i;
+        let i = 0;
         while (i < msg.length) {
             chunks.push(msg.substring(i, i + 4096));
             i += 4096;
         }
         chunks.forEach(chunk=> {
-            interaction.reply({embeds: [new EmbedBuilder().setColor(this.options.embed.color).setDescription(chunk)],
-                components: this.components,
+            message.reply({embeds: [new EmbedBuilder().setColor(this.options.embed.color).setDescription(chunk)],
+                components: this.options.components,
                 allowedMentions: {repliedUser:this.options.replyMention,parse:[],users:[],roles:[]}
             })
         });
