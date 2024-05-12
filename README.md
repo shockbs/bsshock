@@ -78,9 +78,7 @@ new shockbs.guessThePokemonGame({
 }).startGame();
 ```
 # GPT-4 / GPT-3.5 / GPT-3 (FREE & Unlimited)
-
-<div style="position:relative; width:100%; height:0px; padding-bottom:52.914%"><iframe allow="fullscreen" allowfullscreen height="100%" src="https://streamable.com/e/vrainq?loop=0" width="100%" style="border:none; width:100%; height:100%; position:absolute; left:0px; top:0px; overflow:hidden;"></iframe></div>
-
+- [click here for preview](https://media.discordapp.net/attachments/1239077169481912371/1239077170073043024/9685_Discord___testing-ai___Shock_bot_Testing_-_Google_Chrome_2024-05-12_10-52-07.mp4?ex=66419c0a&is=66404a8a&hm=8d97d95e305ab6762efdb96101cc218fd6bd68a8a05abc3238d5c01ca471e33e&)
 - supports chat conversation:
 > first initialize gptChat
 ```js
