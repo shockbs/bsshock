@@ -78,6 +78,9 @@ new shockbs.guessThePokemonGame({
 }).startGame();
 ```
 # GPT-4 / GPT-3.5 / GPT-3 (FREE & Unlimited)
+
+<div style="position:relative; width:100%; height:0px; padding-bottom:52.914%"><iframe allow="fullscreen" allowfullscreen height="100%" src="https://streamable.com/e/vrainq?loop=0" width="100%" style="border:none; width:100%; height:100%; position:absolute; left:0px; top:0px; overflow:hidden;"></iframe></div>
+
 - supports chat conversation:
 > first initialize gptChat
 ```js
