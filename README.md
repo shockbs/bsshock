@@ -55,6 +55,7 @@ if (loggedIn === true) {
 }
 ```
 # GuessThePokemon Game
+![Demo guessThePokemonGame](https://i.ibb.co/0Ffgc8k/Screenshot-2024-0512-113928.jpg)
 ```js
 import shockbs from "shockbs";
 // const shockbs = require("shockbs");
@@ -109,6 +110,7 @@ client.shockChat = chatData;
 > processing messages:
 ```js
 if (!(message.mentions?.users?.first() || {id:false}).id === client.user.id || !message.content?.length) return;
+message.channel.startTyping();
 await client.shockChat.message(message);
 ```
 > clearing all conversation history:
