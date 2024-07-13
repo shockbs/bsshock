@@ -6,7 +6,7 @@ const { ButtonStyle, EmbedBuilder, ButtonBuilder, AttachmentBuilder, ActionRowBu
 module.exports = class gpt4Chat {
   constructor(options = {}) {
     if (loggedIn() === false) {
-      throw new Error("API not logged in");
+      throw new Error("API not logged in. Read https://docs.shockbs.is-a.dev/guides/login#why-are-classes-and-functions-still-throwing-erros-even-ive-already-logged-in");
     }
     if (!options.model) {
       throw new ReferenceError("options.model was missing");

@@ -2,7 +2,7 @@ const fetch = require("node-fetch");const stringSimilarity = require("string-sim
 module.exports = class guessThePokemonGame {
     constructor(options={}) {
         if (loggedIn() === false) {
-          throw new Error("API not logged in");
+          throw new Error("API not logged in read https://docs.shockbs.is-a.dev/guides/login#why-are-classes-and-functions-still-throwing-erros-even-ive-already-logged-in");
         }
         if (!options.base) {
           throw new Error("options.base is missing");

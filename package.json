@@ -3,7 +3,7 @@
   "description": "LOTS ultilities to upgrade your Discord Bot using SHOCK API !",
   "main": "./src/index.js",
   "package-name": "shockbs",
-  "version": "0.1.1116",
+  "version": "0.1.1117",
   "author": "shockbs",
   "license": "CC-BY-NC 4.0",
   "exports": {
