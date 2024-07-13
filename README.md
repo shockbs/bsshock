@@ -1,4 +1,4 @@
-<h1 style="background: linear-gradient(to right, #FB24FF, #4BE1FF); -webkit-background-clip: text; color: transparent; font-size: 32px; font-weight: bold; padding: 10px; text-align: center;" href="https://shockbs.is-a.dev/?v=new">ShockBS</h1>
+<h1 style="background: linear-gradient(to right, #FB24FF, #4BE1FF); -webkit-background-clip: text; color: transparent; font-size: 32px; font-weight: bold; padding: 10px; text-align: center;"><a href="https://shockbs.is-a.dev/?v=new">ShockBS</a></h1>
 <p align="center">
     <span style="display: inline-block; padding: 5px; border-radius: 10px; background: linear-gradient(to right, #f36262, #961e1e); -webkit-background-clip: text; color: transparent;">
         <img src="https://nodei.co/npm/shockbs.png?downloads=true&downloadRank=true&stars=true" alt="ShockBS">
