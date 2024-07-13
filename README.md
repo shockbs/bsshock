@@ -24,59 +24,10 @@
 <br/>
 
 # [Support Server](https://discord.gg/zeBet3HrU4)
-https://discord.gg/zeBet3HrU4
-# [Getting Started](https://discord.gg/zeBet3HrU4)
-you can install ShockBS via npm:
-```bash
-npm i shockbs@latest
-```
-# [Getting your API Key](https://discord.gg/zeBet3HrU4)
-join the [support server](https://discord.gg/zeBet3HrU4) and visit api settings channel
-# [Logging in with an API Key](https://discord.gg/zeBet3HrU4)
-```js
-import shockbs from "shockbs";
-// const shockbs = require("shockbs");
-try {
-    shockbs.login(process.env.ShockBS_APIKEY);
-} catch(err) {
-    console.error("Unable to log in, reason: "+err.message);
-}
-```
-You only need to call login() once, it's recommended to do that on your main file
-# Checking if you are already logged in
-```js
-import shockbs from "shockbs";
-// const shockbs = require("shockbs");
-const loggedIn = shockbs.loggedIn();
-if (loggedIn === true) {
-    console.log("Already Logged In");
-} else {
-    console.error("[Shock API] Not Logged In Yet");
-}
-```
-# GuessThePokemon Game
-![Demo guessThePokemonGame](https://i.ibb.co/0Ffgc8k/Screenshot-2024-0512-113928.jpg)
-```js
-import shockbs from "shockbs";
-// const shockbs = require("shockbs");
-new shockbs.guessThePokemonGame({
-    base: interaction, // required, can be either message or interaction
-    baseType: "Interaction" // required, the type of base, can be either message or interaction, case-insensitive
-    embed: {
-        title: "Who's the Pokemon?", // optional, string, the title of embed
-        color: "#F600FF", // optional, string, the color of embed
-        winMessage: "You're right! The Pokemon is ${pokemonName}.", // optional, title when user guessed the correct pokemon name, ${pokemonName} will be replaced with the correct pokemon name
-        loseMessage: "You're wrong! Please try again.", // optional, string
-        timeoutMessage: "You didn't respond in time. The pokemon was ${pokemonName}." // optional, string, ${pokemonName} will be replaced with the correct pokemon name
-    },
-    button: {
-        text: "Input Answer", // optional, string
-        style: ButtonStyle.Primary, // optional
-        emoji: null, // optional
-    },
-    time: "half minute", //optional
-}).startGame();
-```
+
+# Documentation
+# Documentation: https://docs.shockbs.is-a.dev/
+
 # GPT-4 / GPT-3.5 / GPT-3 (FREE & Unlimited)
 - [click here for preview](https://media.discordapp.net/attachments/1239077169481912371/1239077170073043024/9685_Discord___testing-ai___Shock_bot_Testing_-_Google_Chrome_2024-05-12_10-52-07.mp4?ex=66419c0a&is=66404a8a&hm=8d97d95e305ab6762efdb96101cc218fd6bd68a8a05abc3238d5c01ca471e33e&)
 - supports chat conversation:

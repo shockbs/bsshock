@@ -43,10 +43,11 @@ module.exports = class gpt4Chat {
       throw new TypeError("options.components should be an array");
     }
     if (!options.custom) {
-        options.custom = false;
-    }
-    if (typeof options.custom !== "boolean") {
-        throw new TypeError("options.custom must be a boolean");
+        options.custom = null;
+    } else if (typeof options.custom !== "string") {
+        throw new TypeError("options.custom must be a string");
+    } else if (opinion.custom.length > 1500) {
+        throw new ReferenceError("The length of option.custom should nnotbe greater than 1500.")
     }
     if (!options.embed) {
         options.embed = {};
