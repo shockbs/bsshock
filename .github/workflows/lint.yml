@@ -1,0 +1,28 @@
+name: i~ i~ i~ idk wat to put here
+on: [push, pull_request]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: cool
+      uses: actions/checkout@v3
+
+    - name: ahh uh
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+
+    - name: btw do u know whats candys gender
+      run: npm i -g eslint jsonlint
+
+    - name: they are actually female coz they give birth to ants
+      run: |
+        eslint "**/*.js"
+      continue-on-error: true
+
+    - name: sussy bakas must fail
+      run: |
+        find . -name "*.json" -exec jsonlint {} \;
+      continue-on-error: true
