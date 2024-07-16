@@ -46,7 +46,7 @@ module.exports = class gpt4Chat {
         options.custom = null;
     } else if (typeof options.custom !== "string") {
         throw new TypeError("options.custom must be a string");
-    } else if (opinion.custom.length > 1500) {
+    } else if (options.custom.length > 1500) {
         throw new ReferenceError("The length of option.custom should nnotbe greater than 1500.")
     }
     if (!options.embed) {
