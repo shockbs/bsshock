@@ -121,14 +121,14 @@ module.exports = class gpt4Chat {
       data = await this.cache.get(message.author.id);
     }
     data.push({ role: "user", content: message.cleanContent });
-    const fetched = await fetch(`https://api.shockbs.is-a.dev/v1/ai/${this.model}/chat/${this.options.custom ? "custom":"normal"}`, {
+    const fetched = await fetch(`https://api.shockbs.is-a.dev/v1/ai/gpt`, {
         method: "post",
         headers: {
             Authorization: `Bearer ${this.token}`,
             Accept: "application/json",
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({data})
+        body: JSON.stringify({data, model: this.model, custom: this.options.custom })
     });
     if (fetched.status === 403) {
         message.reply({content:"Error: API request to api.shockbs.is-a.dev/v1/ was rejected or banned",allowedMentions:{repliedUser:false, parse:[],users:[],roles:[]}});
@@ -139,7 +139,7 @@ module.exports = class gpt4Chat {
         }
     }
     if (!fetched.ok) {
-        throw new Error(fetched);
+        throw new Error(await fetched.text());
     }
     const { message:msg } = await fetched.json();
     data.push({role:"shock", content:msg});
