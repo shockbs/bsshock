@@ -14,7 +14,7 @@ module.exports = class gpt4Chat {
     if (typeof options.model !== "string") {
       throw new TypeError("options.model must be a string");
     }
-    const compareResults = ((stringSimilarity.findBestMatch(options.model.toLowerCase(), ["gpt4", "gpt3.5", "gpt3"])).ratings.filter(result => result.rating >= 0.3)).sort((shock, Shock) => Shock.rating - shock.rating);
+    const compareResults = ((stringSimilarity.findBestMatch(options.model.toLowerCase(), ["gpt-4", "gpt-3.5", "gpt-3"])).ratings.filter(result => result.rating >= 0.3)).sort((shock, Shock) => Shock.rating - shock.rating);
     if (compareResults.length > 0) {
       options.model = compareResults[0].target;
     } else {
