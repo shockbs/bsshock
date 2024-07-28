@@ -195,7 +195,7 @@ module.exports = class gpt4Chat {
     data.push({ role: "user", content: message.cleanContent });
     const { message: msg } = await request({
       method: "post",
-      route: "ai/gpt",
+      route: "ai/chat",
       body: JSON.stringify({ data, model: data2.model, custom: this.options.custom }),
       reply: message.reply
     });
