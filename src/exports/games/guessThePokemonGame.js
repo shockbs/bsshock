@@ -1,9 +1,7 @@
-const fetch = require("node-fetch");const stringSimilarity = require("string-similarity");const { loggedIn, getToken } = require("../../save.js");const { ButtonStyle, EmbedBuilder, ButtonBuilder, AttachmentBuilder, ActionRowBuilder, ModalBuilder, TextInputBuilder, TextInputStyle } = require("discord.js");
+const fetch = require("node-fetch");const stringSimilarity = require("string-similarity");const { connected, getToken, request } = require("../../utilman.js");const { ButtonStyle, EmbedBuilder, ButtonBuilder, AttachmentBuilder, ActionRowBuilder, ModalBuilder, TextInputBuilder, TextInputStyle } = require("discord.js");
 module.exports = class guessThePokemonGame {
     constructor(options={}) {
-        if (loggedIn() === false) {
-          throw new Error("API not logged in read https://docs.shockbs.is-a.dev/guides/login#why-are-classes-and-functions-still-throwing-erros-even-ive-already-logged-in");
-        }
+        connected(true);
         if (!options.base) {
           throw new Error("options.base is missing");
         }
@@ -132,29 +130,16 @@ module.exports = class guessThePokemonGame {
     }
     
     async fetchAPI() {
-        let res;
-        try {
-            res = await fetch("https://api.shockbs.is-a.dev/v1/random/pokemon", {
-            method: "get",
-            headers: {
-              Authorization: `Bearer ${getToken()}`,
-              Accept: "application/json",
-             "Content-Type": "application/json",
-           }
-           });
-        } catch(e) {
-            throw new Error("Failed to Fetch data from API: "+e.message);
-        }
-        try {
-            this.data = await res.json();
-        } catch(e) {
-            throw new Error("Failed to convert fetched data to JSON: "+e.message);
-        }
+        this.data = await request({
+        method: "get",
+        route: "random/pokemon",
+        reply: this.message.edit
+        });
     }
     
     async setFile() {
         try {
-            this.file = new AttachmentBuilder(Buffer.from(this.data.image.data), {name: "api.shockbs.is-a.dev_guess_the_pokemon_output.png"});
+            this.file = new AttachmentBuilder(Buffer.from(this.data.image.data || this.data.image), {name: "api.shockbs.is-a.dev_guess_the_pokemon_output.png"});
         } catch(e) {
             throw new Error("Something went wrong file setting the image file: "+e.message);
         }
@@ -320,8 +305,10 @@ module.exports = class guessThePokemonGame {
                 if (this.base.deferred) {
                     await this.base.editReply({content: "Loading...",allowedMentions:{repliedUser:false,users:[]}});
                     this.message = await this.base.fetchReply();
+                    this.message.edit = this.base.editReply;
                 } else if (this.base.replied) {
                     this.message = await this.base.fetchReply();
+                    this.message.edit = this.base.editReply;
                     this.message.edit({
                         content: "Loading...",
                         embeds: [],
@@ -330,6 +317,7 @@ module.exports = class guessThePokemonGame {
                         allowedMentions:{repliedUser:false,users:[]}
                     })
                 } else {
+                    this.message.edit = this.base.editReply;
                     this.message = await this.base.reply({content:"Loading...",allowedMentions:{repliedUser:false,users:[]}});
                 }
             } catch(eeeee) {
