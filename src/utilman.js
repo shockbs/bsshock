@@ -14,13 +14,12 @@ const connect = async (a) => {
   }
   try {
     const res = await undici(`https://api.shockbs.is-a.dev/v1/ping`, {
-      method,
+      method: "get",
       headers: {
         Authorization: `Bearer ${token}`,
-        Accept: noJSON ? undefined : 'application/json',
+        Accept: 'application/json',
         'Content-Type': 'application/json',
-      },
-      body: method === 'post' ? JSON.stringify(body) : undefined,
+      }
     });
     if (res.statusCode === 200) {
       s = token;
