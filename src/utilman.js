@@ -31,14 +31,14 @@ const connect = async (a) => {
   } catch (e) {
     throw new Error(`Error in connect: ${e.message}`);
   }
-}
+};
 
 const getToken = () => {
   if (!s?.length) {
     throw new Error("Not logged in yet");
   }
   return s;
-}
+};
 
 const connected = (returnError) => {
   if (s?.length) {
@@ -50,7 +50,7 @@ const connected = (returnError) => {
       return false;
     }
   }
-}
+};
 
 const request = async (options) => {
   if (!s.length) {
@@ -92,4 +92,4 @@ module.exports = {
   request,
   connect,
   connected
-}
+};
