@@ -1,6 +1,6 @@
 let s;
-const axios = require("axios");
 const { request: undici } = require('undici');
+
 const connect = async (a) => {
   if (typeof a !== "string") {
     throw new Error("Token must be a string");
@@ -9,7 +9,7 @@ const connect = async (a) => {
     throw new Error("No token provided");
   }
   const token = a.replace(/^(Token|Bearer|Key|Shock)\s*/i, '').replaceAll("`", "").replaceAll("|", "");
-  if (!token.length > 15) {
+  if (token.length <= 15) {
     throw new Error("No valid token provided");
   }
   try {
@@ -25,17 +25,17 @@ const connect = async (a) => {
       s = token;
       return "Connected Successfully";
     } else {
-      throw new Error({ message: "Unable to Connect.", response: data.body.json() });
+      const data = await res.body.json();
+      throw new Error(`Unable to Connect. Response: ${JSON.stringify(data)}`);
     }
   } catch (e) {
-    throw e;
+    throw new Error(`Error in connect: ${e.message}`);
   }
 }
 
 const getToken = () => {
   if (!s?.length) {
     throw new Error("Not logged in yet");
-    return false;
   }
   return s;
 }
@@ -45,16 +45,16 @@ const connected = (returnError) => {
     return true;
   } else {
     if (returnError) {
-        throw new Error('[API_NOT_CONNECTED] API not attempted to connect or connect() is not awaited, read: https://docs.shockbs.is-a.dev/guides/login#why-are-classes-and-functions-still-throwing-erros-even-ive-already-logged-in');
+      throw new Error('[API_NOT_CONNECTED] API not attempted to connect or connect() is not awaited. Read: https://docs.shockbs.is-a.dev/guides/login#why-are-classes-and-functions-still-throwing-erros-even-ive-already-logged-in');
     } else {
-        return false;
+      return false;
     }
   }
 }
 
 const request = async (options) => {
   if (!s.length) {
-    throw new Error('[API_NOT_CONNECTED] API not attempted to connect or connect() is not awaited, read: https://docs.shockbs.is-a.dev/guides/login#why-are-classes-and-functions-still-throwing-erros-even-ive-already-logged-in');
+    throw new Error('[API_NOT_CONNECTED] API not attempted to connect or connect() is not awaited. Read: https://docs.shockbs.is-a.dev/guides/login#why-are-classes-and-functions-still-throwing-erros-even-ive-already-logged-in');
   }
   const { method, route, body, reply } = options;
 
@@ -80,12 +80,13 @@ const request = async (options) => {
           allowedMentions: { repliedUser: false, parse: [], users: [], roles: [] },
         });
       }
-      throw new Error({ message: data.message, statusCode: data.statusCode });
+      throw new Error(`Request failed. Response: ${JSON.stringify(data)}, Status Code: ${res.statusCode}`);
     }
   } catch (error) {
     throw new Error(`Request failed: ${error.message}`);
   }
 };
+
 module.exports = {
   getToken,
   request,
