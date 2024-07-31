@@ -63,10 +63,8 @@ const request = async (options) => {
       method: method.toUpperCase(),
       headers: {
         Authorization: `Bearer ${s}`,
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
       },
-      data: method === 'POST' ? body : undefined,
+      data: method.toUpperCase() === 'POST' ? body : undefined,
     });
 
     if (res.status === 200) {
