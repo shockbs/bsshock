@@ -1,3 +1,3 @@
 {
-  "not_logged_in": '[API_NOT_LOGGED_IN] API not attempted to log in or login() is not awaited, read: https://docs.shockbs.is-a.dev/guides/login#why-are-classes-and-functions-still-throwing-erros-even-ive-already-logged-in'
+  "not_logged_in": "[API_NOT_LOGGED_IN] API not attempted to log in or login() is not awaited, read: https://docs.shockbs.is-a.dev/guides/login#why-are-classes-and-functions-still-throwing-erros-even-ive-already-logged-in"
 }
