@@ -1,5 +1,5 @@
 let s;
-const { request: undici } = require('undici');
+const axios = require('axios');
 
 const connect = async (a) => {
   if (typeof a !== "string") {
@@ -13,23 +13,22 @@ const connect = async (a) => {
     throw new Error("No valid token provided");
   }
   try {
-    const res = await undici(`https://api.shockbs.is-a.dev/v1/ping`, {
-      method: "GET",
+    const res = await axios.get('https://api.shockbs.is-a.dev/v1/ping', {
       headers: {
         Authorization: `Bearer ${token}`,
         Accept: 'application/json',
         'Content-Type': 'application/json',
       }
     });
-    const data = await res.body.json();
-    if (res.statusCode === 200) {
+
+    if (res.status === 200) {
       s = token;
       return "Connected Successfully";
     } else {
-      throw new Error(`Unable to Connect. Response: ${JSON.stringify(data)}`);
+      throw new Error(`Unable to Connect. Response: ${JSON.stringify(res.data)}`);
     }
   } catch (e) {
-    throw new Error(`Error in connect: ${await e.message||JSON.stringify(await e.message)||e}`);
+    throw new Error(`Error in connect: ${e.message || JSON.stringify(e)}`);
   }
 };
 
@@ -59,28 +58,27 @@ const request = async (options) => {
   const { method, route, body, reply } = options;
 
   try {
-    const res = await undici(`https://api.shockbs.is-a.dev/v1/${route}`, {
+    const res = await axios({
+      url: `https://api.shockbs.is-a.dev/v1/${route}`,
       method: method.toUpperCase(),
       headers: {
         Authorization: `Bearer ${s}`,
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: method === 'POST' ? JSON.stringify(body) : undefined,
+      data: method === 'POST' ? body : undefined,
     });
 
-    const data = await res.body.json();
-
-    if (res.statusCode === 200) {
-      return data;
+    if (res.status === 200) {
+      return res.data;
     } else {
       if (reply) {
         reply({
-          content: `Request to api.shockbs.is-a.dev/v1/${route} failed, response:\n\`\`\`\n${data.message}\n\`\`\`\nStatus Code: ${res.statusCode}`,
+          content: `Request to api.shockbs.is-a.dev/v1/${route} failed, response:\n\`\`\`\n${res.data.message}\n\`\`\`\nStatus Code: ${res.status}`,
           allowedMentions: { repliedUser: false, parse: [], users: [], roles: [] },
         });
       }
-      throw new Error(`Request failed. Response: ${JSON.stringify(data)}, Status Code: ${res.statusCode}`);
+      throw new Error(`Request failed. Response: ${JSON.stringify(res.data)}, Status Code: ${res.status}`);
     }
   } catch (error) {
     throw new Error(`Request failed: ${error.message}`);
