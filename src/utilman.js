@@ -14,21 +14,22 @@ const connect = async (a) => {
   }
   try {
     const res = await undici(`https://api.shockbs.is-a.dev/v1/ping`, {
-      method: "get",
+      method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
         Accept: 'application/json',
         'Content-Type': 'application/json',
       }
     });
+    const data = await res.body.json();
     if (res.statusCode === 200) {
       s = token;
       return "Connected Successfully";
     } else {
-      throw new Error(`Unable to Connect. Response: ${res.body.text()}`);
+      throw new Error(`Unable to Connect. Response: ${JSON.stringify(data)}`);
     }
   } catch (e) {
-    throw new Error(`Error in connect: ${e.message}`);
+    throw new Error(`Error in connect: ${await e.message||JSON.stringify(await e.message)||e}`);
   }
 };
 
@@ -44,7 +45,7 @@ const connected = (returnError) => {
     return true;
   } else {
     if (returnError) {
-      throw new Error('[API_NOT_CONNECTED] API not attempted to connect or connect() is not awaited. Read: https://docs.shockbs.is-a.dev/guides/login#why-are-classes-and-functions-still-throwing-erros-even-ive-already-logged-in');
+      throw new Error('[API_NOT_CONNECTED] API not attempted to connect or connect() is not awaited. Read: https://docs.shockbs.is-a.dev/guides/connect#why-are-classes-and-functions-still-throwing-erros-even-it-is-already-connected');
     } else {
       return false;
     }
@@ -52,20 +53,20 @@ const connected = (returnError) => {
 };
 
 const request = async (options) => {
-  if (!s.length) {
-    throw new Error('[API_NOT_CONNECTED] API not attempted to connect or connect() is not awaited. Read: https://docs.shockbs.is-a.dev/guides/login#why-are-classes-and-functions-still-throwing-erros-even-ive-already-logged-in');
+  if (!s?.length) {
+    throw new Error('[API_NOT_CONNECTED] API not attempted to connect or connect() is not awaited. Read: https://docs.shockbs.is-a.dev/guides/connect#why-are-classes-and-functions-still-throwing-erros-even-it-is-already-connected');
   }
   const { method, route, body, reply } = options;
 
   try {
     const res = await undici(`https://api.shockbs.is-a.dev/v1/${route}`, {
-      method,
+      method: method.toUpperCase(),
       headers: {
         Authorization: `Bearer ${s}`,
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: method === 'post' ? JSON.stringify(body) : undefined,
+      body: method === 'POST' ? JSON.stringify(body) : undefined,
     });
 
     const data = await res.body.json();
