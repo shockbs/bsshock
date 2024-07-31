@@ -23,14 +23,14 @@ module.exports = {
         "no-console": "warn",
         "no-undef": "error",
         "semi": "off",
-        "semi-spacing": "error",
+        "semi-spacing": "off",
         "arrow-spacing": "off",
         "no-confusing-arrow": "error",
         "no-duplicate-imports": "error",
         "no-var": "error",
         "object-shorthand": "off",
-        "prefer-const": "error",
+        "prefer-const": "warn",
         "prefer-template": "warn",
-        "no-unused-vars": "off"
+        "no-unused-vars": "off",
     }
 }
