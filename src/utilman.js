@@ -25,8 +25,7 @@ const connect = async (a) => {
       s = token;
       return "Connected Successfully";
     } else {
-      const data = await res.body.json();
-      throw new Error(`Unable to Connect. Response: ${JSON.stringify(data)}`);
+      throw new Error(`Unable to Connect. Response: ${res.body.text()}`);
     }
   } catch (e) {
     throw new Error(`Error in connect: ${e.message}`);
