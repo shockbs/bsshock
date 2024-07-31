@@ -15,7 +15,7 @@ jobs:
         node-version: '20'
 
     - name: btw do u know whats candys gender
-      run: npm i -g eslint jsonlint
+      run: npm i -g eslint@8.57.0 jsonlint
 
     - name: they are actually female coz they give birth to ants
       run: |
