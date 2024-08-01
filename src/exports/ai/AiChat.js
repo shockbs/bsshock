@@ -76,8 +76,8 @@ module.exports = class gpt4Chat {
             custom_id: "api.shockbs.is-a.dev chat"
           })
         );
-        this.options.components.unshift(buttons);
-        this.options.dashboard = dash;
+        options.components.unshift(buttons);
+        options.dashboard = dash;
       } else {
         throw new Error("options.dashboard.enabled is required.");
       }
