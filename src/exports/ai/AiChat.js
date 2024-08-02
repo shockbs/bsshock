@@ -277,7 +277,7 @@ function reply(reply, data, options, ephemeral) {
       new EmbedBuilder()
         .setColor(options.embed.color)
         .setTitle("AI Dashboard")
-        .setURL("https://docs.shockbs.is-a.dev/pckg/models/AiChat")
+        .setURL("https://docs.shockbs.is-a.dev/pckg/models/AiChat") // Please respect the license, you are not allowed to remove this.
     ],
     allowedMentions: { repliedUser: false },
     ephemeral: ephemeral ? true : undefined,
