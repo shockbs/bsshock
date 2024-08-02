@@ -63,6 +63,7 @@ const request = async (options) => {
       method: method.toUpperCase(),
       headers: {
         Authorization: `Bearer ${s}`,
+        "Content-Type": "application/json",
       },
       data: method.toUpperCase() === 'POST' ? body : undefined,
     });
