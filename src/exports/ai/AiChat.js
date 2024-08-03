@@ -240,7 +240,7 @@ module.exports = class gpt4Chat {
       this.data.set(interaction.user.id, data);
     }
 
-    if (interaction.replied || interaction.deferred) {
+    if (interaction.replied) {
       interaction.reply = interaction.editReply;
       interaction.update = interaction.editReply;
     }
@@ -254,11 +254,13 @@ module.exports = class gpt4Chat {
       return reply(interaction.reply, data, this.options, ephemeral);
     } else {
       switch (interaction.customId.replace("api.shockbs.is-a.dev chat ", "")) {
-        case "clear":
+        case "clear": {
           this.data.delete(interaction.user.id);
           this.cache.delete(interaction.user.id);
           return interaction.update({ content: "Cleared data successfully", embeds: [], components: [], allowedMentions: { repliedUser: true } });
-        case "models":
+          break;
+        }
+        case "models": {
           data.model = interaction.values[0];
           if (this.options.dashboard.clearConversationOnSwitchModel) {
             this.cache.delete(interaction.user.id);
@@ -266,6 +268,8 @@ module.exports = class gpt4Chat {
           }
           this.data.set(interaction.user.id, data);
           return reply(interaction.update, data, this.options);
+          break;
+        }
       }
     }
   }
