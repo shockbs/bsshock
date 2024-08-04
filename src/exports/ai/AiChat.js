@@ -247,7 +247,7 @@ module.exports = class gpt4Chat {
   
   if (interaction.customId === "api.shockbs.is-a.dev chat") {
       if (!interaction.replied) await interaction.deferReply({ephemeral:true})
-      return interaction.editReply(reply(data, this.options));
+      return interaction.editReply(reply(data));
   }
   
   
@@ -268,14 +268,14 @@ module.exports = class gpt4Chat {
       data.count = 0;
     }
     this.data.set(interaction.user.id, data);
-    return interaction.update(reply(data, this.options));
+    return interaction.update(reply(data));
   } else if (customId === "chatchat") {
-    return interaction.update(reply(data, this.options));
+    return interaction.update(reply(data));
   }
 }
 };
 
-function reply(data, options) {
+function reply(data) {
   return {
     embeds: [
       new EmbedBuilder()
@@ -286,7 +286,7 @@ function reply(data, options) {
     allowedMentions: { repliedUser: false },
     components: [
       new ActionRowBuilder().addComponents(
-        new ButtonBuilder({ style: ButtonStyle.Danger, custom_id: "api.shockbs.is-a.dev chat clear", label: `(${data.count}/${options.maxInteractions})`, disabled: data.count <= 0 }),
+        new ButtonBuilder({ style: ButtonStyle.Danger, custom_id: "api.shockbs.is-a.dev chat clear", label: `(${data.count})`, disabled: data.count <= 0 }),
         new ButtonBuilder({ style: ButtonStyle.Secondary, emoji: "🔄", custom_id: "api.shockbs.is-a.dev chatchat" })
       ),
       new ActionRowBuilder().addComponents(
