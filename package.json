@@ -3,7 +3,7 @@
   "description": "Unlimited, Unrestricted Free AI models API, including GPT-4. Games for discord bots and wrapper for the ShockBS API",
   "main": "./src/index.js",
   "package-name": "shockbs",
-  "version": "0.1.1133",
+  "version": "0.1.1134",
   "author": "shockbs",
   "license": "CC-BY-NC 4.0",
   "exports": {

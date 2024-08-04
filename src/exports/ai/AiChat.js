@@ -233,49 +233,48 @@ module.exports = class gpt4Chat {
   }
 
   async handleInteraction(interaction) {
-    if (!interaction.customId.startsWith("api.shockbs.is-a.dev chat")) return;
-    let data = this.data.get(interaction.user.id) || { model: this.model, count: 0 };
-
-    if (!this.data.has(interaction.user.id)) {
-      this.data.set(interaction.user.id, data);
-    }
-
-    if (interaction.replied) {
-      interaction.reply = interaction.editReply;
-      interaction.update = interaction.editReply;
-    }
-
-    if (interaction.customId.endsWith("chat")) {
-      let ephemeral = true;
-      if (interaction.customId.endsWith("chatchat")) {
-        interaction.reply = interaction.update;
-        ephemeral = false;
-      }
-      return reply(interaction.reply, data, this.options, ephemeral);
-    } else {
-      switch (interaction.customId.replace("api.shockbs.is-a.dev chat ", "")) {
-        case "clear": {
-          this.data.delete(interaction.user.id);
-          this.cache.delete(interaction.user.id);
-          return interaction.update({ content: "Cleared data successfully", embeds: [], components: [], allowedMentions: { repliedUser: true } });
-          break;
-        }
-        case "models": {
-          data.model = interaction.values[0];
-          if (this.options.dashboard.clearConversationOnSwitchModel) {
-            this.cache.delete(interaction.user.id);
-            data.count = 0;
-          }
-          this.data.set(interaction.user.id, data);
-          return reply(interaction.update, data, this.options);
-          break;
-        }
-      }
-    }
+  if (!interaction.customId || typeof interaction.customId !== "string") {
+      throw new ReferenceError("'interaction' must be from interactionCreate");
   }
+  
+  if (interaction.customId === "api.shockbs.is-a.dev chat") {
+      return reply(interaction.reply, data, this.options, true);
+  }
+  
+  if (!interaction.customId.startsWith("api.shockbs.is-a.dev chat")) return;
+  
+  let data = this.data.get(interaction.user.id) || { model: this.model, count: 0 };
+  
+  if (!this.data.has(interaction.user.id)) {
+    this.data.set(interaction.user.id, data);
+  }
+
+  if (interaction.replied) {
+    interaction.reply = interaction.editReply;
+    interaction.update = interaction.editReply;
+  }
+
+  const customId = interaction.customId.replace("api.shockbs.is-a.dev chat ", "");
+  
+  if (customId === "clear") {
+    this.data.delete(interaction.user.id);
+    this.cache.delete(interaction.user.id);
+    return interaction.update({ content: "Cleared data successfully", embeds: [], components: [], allowedMentions: { repliedUser: true } });
+  } else if (customId === "models") {
+    data.model = interaction.values[0];
+    if (this.options.dashboard.clearConversationOnSwitchModel) {
+      this.cache.delete(interaction.user.id);
+      data.count = 0;
+    }
+    this.data.set(interaction.user.id, data);
+    return reply(interaction.update, data, this.options);
+  } else if (customId === "chatchat") {
+    return reply(interaction.update, data, this.options, false);
+  }
+}
 };
 
-function reply(reply, data, options, ephemeral) {
+function reply(reply, data, options, ephemeral = true) {
   return reply({
     embeds: [
       new EmbedBuilder()
@@ -284,7 +283,7 @@ function reply(reply, data, options, ephemeral) {
         .setURL("https://docs.shockbs.is-a.dev/pckg/models/AiChat") // Please respect the license, you are not allowed to remove this.
     ],
     allowedMentions: { repliedUser: false },
-    ephemeral: ephemeral ? true : undefined,
+    ephemeral: ephemeral,
     components: [
       new ActionRowBuilder().addComponents(
         new ButtonBuilder({ style: ButtonStyle.Danger, custom_id: "api.shockbs.is-a.dev chat clear", label: `(${data.count}/${options.maxInteractions})`, disabled: data.count <= 0 }),
