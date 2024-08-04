@@ -268,9 +268,9 @@ module.exports = class gpt4Chat {
       data.count = 0;
     }
     this.data.set(interaction.user.id, data);
-    return interaction.update(reply(data, options));
+    return interaction.update(reply(data, this.options));
   } else if (customId === "chatchat") {
-    return interaction.update(reply(data, options));
+    return interaction.update(reply(data, this.options));
   }
 }
 };
