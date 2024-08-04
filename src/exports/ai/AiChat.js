@@ -247,7 +247,7 @@ module.exports = class gpt4Chat {
   
   if (interaction.customId === "api.shockbs.is-a.dev chat") {
       if (!interaction.replied) await interaction.deferReply({ephemeral:true})
-      return interaction.editReply(reply(data, options));
+      return interaction.editReply(reply(data, this.options));
   }
   
   
