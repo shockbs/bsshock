@@ -246,13 +246,13 @@ module.exports = class gpt4Chat {
   }
   
   if (interaction.customId === "api.shockbs.is-a.dev chat") {
-      return reply(interaction.reply, data, this.options, true);
+      if (!interaction.replied) await interaction.deferReply({ephemeral:true})
+      return interaction.editReply(reply(data));
   }
   
   
   if (interaction.replied) {
-    interaction.reply = interaction.editReply;
-    interaction.update = interaction.editReply;
+    throw new Error("interaction should not be replied")
   }
 
   const customId = interaction.customId.replace("api.shockbs.is-a.dev chat ", "");
@@ -268,23 +268,22 @@ module.exports = class gpt4Chat {
       data.count = 0;
     }
     this.data.set(interaction.user.id, data);
-    return reply(interaction.update, data, this.options);
+    return interaction.update(reply(data));
   } else if (customId === "chatchat") {
-    return reply(interaction.update, data, this.options, false);
+    return interaction.update(reply(data));
   }
 }
 };
 
-function reply(reply, data, options, ephemeral = true) {
-  return reply({
+function reply(data) {
+  return {
     embeds: [
       new EmbedBuilder()
-        .setColor(options.embed.color)
+        .setColor("#00FFDE")
         .setTitle("AI Dashboard")
         .setURL("https://docs.shockbs.is-a.dev/pckg/models/AiChat") // Please respect the license, you are not allowed to remove this.
     ],
     allowedMentions: { repliedUser: false },
-    ephemeral: ephemeral,
     components: [
       new ActionRowBuilder().addComponents(
         new ButtonBuilder({ style: ButtonStyle.Danger, custom_id: "api.shockbs.is-a.dev chat clear", label: `(${data.count}/${options.maxInteractions})`, disabled: data.count <= 0 }),
@@ -310,5 +309,6 @@ function reply(reply, data, options, ephemeral = true) {
           )
       )
     ]
-  });
+  }
+  
 }
