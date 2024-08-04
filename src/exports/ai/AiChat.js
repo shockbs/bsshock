@@ -237,10 +237,6 @@ module.exports = class gpt4Chat {
       throw new ReferenceError("'interaction' must be from interactionCreate");
   }
   
-  if (interaction.customId === "api.shockbs.is-a.dev chat") {
-      return reply(interaction.reply, data, this.options, true);
-  }
-  
   if (!interaction.customId.startsWith("api.shockbs.is-a.dev chat")) return;
   
   let data = this.data.get(interaction.user.id) || { model: this.model, count: 0 };
@@ -248,7 +244,12 @@ module.exports = class gpt4Chat {
   if (!this.data.has(interaction.user.id)) {
     this.data.set(interaction.user.id, data);
   }
-
+  
+  if (interaction.customId === "api.shockbs.is-a.dev chat") {
+      return reply(interaction.reply, data, this.options, true);
+  }
+  
+  
   if (interaction.replied) {
     interaction.reply = interaction.editReply;
     interaction.update = interaction.editReply;
