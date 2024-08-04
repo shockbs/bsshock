@@ -200,7 +200,7 @@ module.exports = class gpt4Chat {
       reply: message.reply
     });
     data.push({ role: "shock", content: msg });
-
+    data2.count ++
     if (data2.count > this.options.maxInteractions) {
       this.cache.delete(message.author.id);
       this.data.delete(message.author.id);
@@ -256,21 +256,27 @@ module.exports = class gpt4Chat {
   }
 
   const customId = interaction.customId.replace("api.shockbs.is-a.dev chat ", "");
-  
-  if (customId === "clear") {
-    this.data.delete(interaction.user.id);
+  switch (interaction.customId.replace("api.shockbs.is-a.dev chat ", "")) {
+      case "clear": {
+          this.data.delete(interaction.user.id);
     this.cache.delete(interaction.user.id);
     return interaction.update({ content: "Cleared data successfully", embeds: [], components: [], allowedMentions: { repliedUser: true } });
-  } else if (customId === "models") {
-    data.model = interaction.values[0];
+          break;
+      }
+      case "models": {
+          data.model = interaction.values[0];
     if (this.options.dashboard.clearConversationOnSwitchModel) {
       this.cache.delete(interaction.user.id);
       data.count = 0;
     }
     this.data.set(interaction.user.id, data);
     return interaction.update(reply(data));
-  } else if (customId === "chatchat") {
-    return interaction.update(reply(data));
+          break;
+      }
+      case "chat": {
+          return interaction.update(reply(data));
+          break;
+      }
   }
 }
 };
@@ -286,8 +292,8 @@ function reply(data) {
     allowedMentions: { repliedUser: false },
     components: [
       new ActionRowBuilder().addComponents(
-        new ButtonBuilder({ style: ButtonStyle.Danger, custom_id: "api.shockbs.is-a.dev chat clear", label: `(${data.count})`, disabled: data.count <= 0 }),
-        new ButtonBuilder({ style: ButtonStyle.Secondary, emoji: "🔄", custom_id: "api.shockbs.is-a.dev chatchat" })
+        new ButtonBuilder({ style: ButtonStyle.Danger, custom_id: "api.shockbs.is-a.dev chat clear", label: `(${data.count}) Clear Chat`, disabled: data.count <= 0 }),
+        new ButtonBuilder({ style: ButtonStyle.Secondary, emoji: "🔄", custom_id: "api.shockbs.is-a.dev chat chat" })
       ),
       new ActionRowBuilder().addComponents(
         new StringSelectMenuBuilder()
