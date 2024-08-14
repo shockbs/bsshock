@@ -265,10 +265,10 @@ module.exports = class gpt4Chat {
       }
       case "models": {
           data.model = interaction.values[0];
-    if (this.options.dashboard.clearConversationOnSwitchModel) {
-      this.cache.delete(interaction.user.id);
+    //if (this.options.dashboard.clearConversationOnSwitchModel) {
+      if (this.cache.has(interaction.user.id)) await this.cache.delete(interaction.user.id);
       data.count = 0;
-    }
+    //}
     this.data.set(interaction.user.id, data);
     return interaction.update(reply(data));
           break;
