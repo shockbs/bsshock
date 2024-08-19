@@ -15,7 +15,7 @@ module.exports = class gpt4Chat {
     }
     const compareResults = stringSimilarity
       .findBestMatch(options.model.toLowerCase(), ["gpt-4", "gpt-3.5", "gpt-3"])
-      .ratings.filter(result => result.rating >= 0.3)
+      .ratings.filter(result => result.rating >= 0.8)
       .sort((a, b) => b.rating - a.rating);
 
     if (compareResults.length > 0) {
@@ -252,9 +252,16 @@ module.exports = class gpt4Chat {
   
   
   if (interaction.replied) {
-    throw new Error("interaction should not be replied")
+    throw new Error("interaction should not be replied");
   }
-
+  
+  if (interaction.customId.includes("models")) {
+      if (this.cache.has(interaction.user.id)) await this.cache.delete(interaction.user.id);
+      data.count = 0;
+      this.data.set(interaction.user.id, data);
+      return interaction.update(reply(data));
+  }
+  
   const customId = interaction.customId.replace("api.shockbs.is-a.dev chat ", "");
   switch (interaction.customId.replace("api.shockbs.is-a.dev chat ", "")) {
       case "clear": {
@@ -263,16 +270,16 @@ module.exports = class gpt4Chat {
     return interaction.update({ content: "Cleared data successfully", embeds: [], components: [], allowedMentions: { repliedUser: true } });
           break;
       }
-      case "models": {
+/*      case "models": {
           data.model = interaction.values[0];
-    //if (this.options.dashboard.clearConversationOnSwitchModel) {
+      if (this.options.dashboard.clearConversationOnSwitchModel) {
       if (this.cache.has(interaction.user.id)) await this.cache.delete(interaction.user.id);
       data.count = 0;
-    //}
-    this.data.set(interaction.user.id, data);
-    return interaction.update(reply(data));
-          break;
       }
+    this.data.set(interaction.user.id, data);
+      return interaction.update(reply(data));
+          break;
+      }*/
       case "chat": {
           return interaction.update(reply(data));
           break;
